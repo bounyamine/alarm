@@ -6,7 +6,7 @@ Une application web d'alarme simple et efficace, développée avec React.js. Cet
 
 L'application **Alarm App** affiche une interface utilisateur simple où les utilisateurs peuvent définir des heures d'alarme, visualiser les alarmes actives, et recevoir des notifications au moment de l'alarme.
 
-![Alarm App Screenshot](https://github.com/bounyamine/alarm/public/screenshots/screen.png)
+![Alarm App Screenshot](https://github.com/bounyamine/alarm/blob/master/public/screenshots/screen.png)
 
 ## 🚀 Fonctionnalités
 
