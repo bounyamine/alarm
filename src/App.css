@@ -1,38 +1,139 @@
-.App {
+/* Variables de couleur */
+:root {
+  --primary-color: #e0f7fa; /* Couleur pastel verte */
+  --secondary-color: #ffccbc; /* Couleur pastel rose */
+  --background-color: #2575fc; /* Fond général */
+  --button-bg-color: #ffffff; /* Fond des boutons */
+  --button-hover-color: #eeeeee; /* Couleur au survol des boutons */
+  --text-color: #333; /* Couleur du texte */
+  --screen-bg-color: #333; /* Fond de l'écran */
+  --screen-text-color: #00e676; /* Texte vert */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Ombre douce */
+  --highlight-color: #ff9500; /* Fond bouton principal */
+  --link-text-color: #2575fc; /* Couleur des liens */
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wrapper {
+  background-color: var(--button-bg-color);
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 10px 20px var(--shadow-color);
+  max-width: 70%;
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.current-time {
+  background-color: var(--screen-bg-color);
+  color: var(--screen-text-color);
+  font-size: 2.5rem;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.inputs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+}
+
+.inputs input {
+  width: 80px;
+  padding: 10px;
+  font-size: 1.5rem;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid var(--shadow-color);
+  box-shadow: 0 5px 10px var(--shadow-color);
+  transition: background 0.3s;
+}
+
+.inputs input:focus {
+  outline: none;
+  background-color: var(--button-hover-color);
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.buttons button {
+  background-color: var(--highlight-color);
   color: white;
+  font-size: 1.5rem;
+  padding: 15px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px var(--shadow-color);
 }
 
-.App-link {
-  color: #61dafb;
+.buttons button:hover {
+  background-color: #e68a00;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.buttons button:active {
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alarms-list {
+  margin-top: 20px;
+}
+
+.alarm {
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.alarm input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.alarm button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ff4444;
+  font-size: 1.5rem;
+}
+
+.alarm button:hover {
+  color: #ff0000;
+}
+
+.alarm button:active {
+  transform: scale(0.95);
 }
