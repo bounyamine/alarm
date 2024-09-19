@@ -28,8 +28,8 @@ L'application **Alarm App** affiche une interface utilisateur simple où les uti
 1. **Cloner le projet :**
 
    ```bash
-   git clone https://github.com/yourusername/alarm-app.git
-   cd alarm-app
+   git clone https://github.com/bounyamine/alarm.git
+   cd alarm
    ```
 
 2. **Installer les dépendances :**
