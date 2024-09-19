@@ -1,7 +1,3 @@
-Voici un exemple de fichier `README.md` pour votre application d'alarme, en suivant un format similaire :
-
----
-
 # ⏰ Alarm App
 
 Une application web d'alarme simple et efficace, développée avec React.js. Cette application vous permet de configurer des alarmes et de recevoir des notifications lorsque l'heure est atteinte, avec une interface moderne et intuitive.
@@ -88,7 +84,3 @@ Les contributions sont les bienvenues ! Si vous souhaitez améliorer cette appli
 ## 📄 Licence
 
 Ce projet est sous licence **MIT**. Consultez le fichier [LICENSE](./LICENSE) pour plus d'informations.
-
----
-
-Cela devrait fournir une bonne base pour documenter votre application d'alarme. N'hésitez pas à adapter certains détails en fonction des fonctionnalités spécifiques de votre projet.
