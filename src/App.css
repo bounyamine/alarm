@@ -1,166 +1,181 @@
-/* Variables de couleur */
-:root {
-  --background-light: #ffffff;
-  --primary-light: #4caf50;
-  --accent-light: #00bcd4;
-  --text-light: #333333;
-  --input-border-light: #cccccc;
+/* App.css */
 
-  --background-dark: #1e1e1e;
-  --primary-dark: #00796b;
-  --accent-dark: #00bcd4;
-  --text-dark: #e0e0e0;
-  --input-border-dark: #444444;
-  
-  --error-color: #ff4d4d;
-  --error-hover: #e63939;
+/* Variables CSS */
+:root {
+  --font-family: 'Poppins', sans-serif;
+  --background-gradient: linear-gradient(135deg, #2E3440, #4C566A);
+  --primary-color: #ECEFF4;
+  --secondary-color: #88C0D0;
+  --accent-color: #5E81AC;
+  --error-color: #BF616A;
+  --input-bg-color: #3B4252;
+  --input-focus-bg-color: #4C566A;
+  --button-hover-bg-color: #88C0D0;
+  --button-clear-bg-color: #BF616A;
+  --button-clear-hover-bg-color: #D08770;
+  --alarm-active-bg-color: rgba(136, 192, 208, 0.8);
+  --alarm-bg-color: rgba(76, 86, 106, 0.5);
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-body {
-  font-family: 'Roboto', sans-serif;
+/* Styles généraux */
+body, html {
   margin: 0;
   padding: 0;
-  background-color: var(--background-light);
-  color: var(--text-light);
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.wrapper {
-  text-align: center;
-  min-height: 100vh;
+  font-family: var(--font-family);
+  background: var(--background-gradient);
+  color: var(--primary-color);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
   padding: 20px;
-  box-sizing: border-box;
-}
-
-.wrapper.light {
-  background-color: var(--background-light);
-  color: var(--text-light);
-}
-
-.wrapper.dark {
-  background-color: var(--background-dark);
-  color: var(--text-dark);
+  background: rgba(46, 52, 64, 0.8);
+  border-radius: 15px;
+  box-shadow: var(--box-shadow);
 }
 
 .current-time {
-  font-size: 3rem;
-  font-weight: 600;
-  margin-bottom: 20px;
+  font-size: 48px;
   letter-spacing: 2px;
-  transition: color 0.5s ease;
-}
-
-.current-time.light {
-  color: var(--text-light);
-}
-
-.current-time.dark {
-  color: var(--accent-dark);
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .container {
-  max-width: 600px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  width: 100%;
 }
 
-.container.dark {
-  background-color: rgba(30, 30, 30, 0.9);
-  box-shadow: 0 8px 16px rgba(0, 188, 212, 0.2);
+.inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #D8DEE9;
 }
 
 input[type="number"], select {
   width: 60px;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid var(--input-border-light);
+  padding: 5px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--input-bg-color);
+  color: var(--primary-color);
   text-align: center;
-  transition: border-color 0.3s ease;
+  font-size: 18px;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+input[type="number"]::placeholder {
+  color: #616E88;
 }
 
 input[type="number"]:focus, select:focus {
-  outline: none;
-  border-color: var(--accent-light);
+  background-color: var(--input-focus-bg-color);
 }
 
-.wrapper.dark input[type="number"], 
-.wrapper.dark select {
-  border-color: var(--input-border-dark);
+.buttons {
+  display: flex;
+  justify-content: space-between;
 }
 
-input[type="number"]:focus, 
-select:focus {
-  border-color: var(--accent-dark);
+button {
+  width: 45%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: scale(1.05);
+}
+
+button.clear {
+  background-color: var(--button-clear-bg-color);
+}
+
+button.clear:hover {
+  background-color: var(--button-clear-hover-bg-color);
+}
+
+.alarms-list {
+  margin-top: 20px;
+}
+
+.alarm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: var(--alarm-bg-color);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.alarm.active {
+  background-color: var(--alarm-active-bg-color);
+}
+
+.alarm .recurrence {
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
+.alarm input[type="checkbox"] {
+  transform: scale(1.3);
+  accent-color: var(--secondary-color);
+}
+
+.alarm-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.alarm-controls button {
+  background-color: #A3BE8C;
+  width: 45%;
+}
+
+.alarm-controls button:hover {
+  background-color: #B48EAD;
 }
 
 .error-message {
   color: var(--error-color);
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-button {
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: var(--primary-light);
-  color: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--accent-light);
-  color: #ffffff;
-}
-
-button:active {
-  background-color: var(--primary-dark);
-}
-
-button.clear {
-  background-color: var(--error-color);
-  color: #fff;
-}
-
-button.clear:hover {
-  background-color: var(--error-hover);
-}
-
-.alarm {
-  padding: 12px 16px;
+  text-align: center;
   margin-bottom: 10px;
-  border-radius: 8px;
-  background-color: var(--input-border-light);
-  transition: background-color 0.3s ease;
 }
 
-.alarm.active {
-  background-color: var(--accent-light);
-  color: #ffffff;
-}
-
-.fa-trash-can {
-  color: var(--error-color);
-  cursor: pointer;
-}
-
-.fa-trash-can:hover {
-  color: var(--error-hover);
-}
-
-.alarm-controls button:nth-child(1) {
-  background-color: var(--error-color);
-}
-
-.alarm-controls button:nth-child(2) {
-  background-color: #ffaa00;
+@media (max-width: 400px) {
+  .wrapper {
+    width: 90%;
+  }
 }

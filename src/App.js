@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Switch, FormControlLabel, Select, MenuItem, TextField, Box, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
-import { FaTrashAlt } from 'react-icons/fa';
-import alarmSoundFile from './alarm.mp3';
 import './App.css';
+import alarmSoundFile from './alarm.mp3';
 
 // Hook personnalisé pour gérer les alarmes
 const useAlarms = () => {
@@ -39,8 +36,7 @@ const useAlarms = () => {
 const AlarmApp = () => {
   const [currentTime, setCurrentTime] = useState('00:00:00');
   const [timeInput, setTimeInput] = useState({ hour: '', minute: '', second: '' });
-  const [recurrence, setRecurrence] = useState('none');
-  const [theme, setTheme] = useState('dark');
+  const [recurrence, setRecurrence] = useState('none'); // Ajout de la récurrence
   const [error, setError] = useState('');
   const [isAlarmRinging, setIsAlarmRinging] = useState(false);
   const alarmSound = useRef(new Audio(alarmSoundFile));
@@ -69,6 +65,21 @@ const AlarmApp = () => {
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alarms]);
+
+  useEffect(() => {
+    // Gestion des erreurs audio
+    const audio = alarmSound.current;
+    const handleAudioError = () => {
+      console.error('Erreur lors de la lecture du son d\'alarme.');
+      setIsAlarmRinging(false);
+    };
+
+    audio.addEventListener('error', handleAudioError);
+
+    return () => {
+      audio.removeEventListener('error', handleAudioError);
+    };
+  }, []);
 
   const appendZero = (value) => (value < 10 ? '0' + value : value);
 
@@ -121,7 +132,7 @@ const AlarmApp = () => {
       id: `${newHour}_${newMinute}_${newSecond}_${Date.now()}`,
       time: `${appendZero(newHour)}:${appendZero(newMinute)}:${appendZero(newSecond)}`,
       isActive: true,
-      recurrence,
+      recurrence, // Ajout de la récurrence
     };
 
     addAlarm(newAlarm);
@@ -152,124 +163,93 @@ const AlarmApp = () => {
   };
 
   return (
-    <motion.div className={`wrapper ${theme}`}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <Typography variant="h2" sx={{ color: theme === 'dark' ? '#00ffcc' : '#333', marginBottom: 3 }}>
-          {currentTime}
-        </Typography>
-        
-        <Box className="inputs" sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
-          <TextField 
-            label="Heures" 
-            type="number" 
-            variant="outlined" 
-            value={timeInput.hour}
-            onChange={(e) => setTimeInput({ ...timeInput, hour: e.target.value })}
-            inputProps={{ min: 0, max: 23 }}
-          />
-          <TextField 
-            label="Minutes" 
-            type="number" 
-            variant="outlined" 
-            value={timeInput.minute}
-            onChange={(e) => setTimeInput({ ...timeInput, minute: e.target.value })}
-            inputProps={{ min: 0, max: 59 }}
-          />
-          <TextField 
-            label="Secondes" 
-            type="number" 
-            variant="outlined" 
-            value={timeInput.second}
-            onChange={(e) => setTimeInput({ ...timeInput, second: e.target.value })}
-            inputProps={{ min: 0, max: 59 }}
-          />
-        </Box>
-
-        <Select
-          label="Récurrence"
-          value={recurrence}
-          onChange={(e) => setRecurrence(e.target.value)}
-        >
-          <MenuItem value="none">Aucune</MenuItem>
-          <MenuItem value="daily">Quotidienne</MenuItem>
-        </Select>
-
-        {error && <Typography color="error">{error}</Typography>}
-
-        <Box sx={{ display: 'flex', gap: 2, marginTop: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleAddAlarm}>
-            Ajouter Alarme
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={clearAlarms}>
-            Effacer Toutes
-          </Button>
-        </Box>
-
-        <Box sx={{ marginTop: 4 }}>
-          {alarms.map((alarm) => (
-            <motion.div
-              key={alarm.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={`alarm ${alarm.isActive ? 'active' : ''}`}
-              style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                backgroundColor: theme === 'dark' ? '#333' : '#fff', padding: '10px', borderRadius: '8px',
-                color: theme === 'dark' ? '#00ffcc' : '#ffffff', marginBottom: '10px'
-              }}
+    <div className="wrapper">
+      <div className="current-time">{currentTime}</div>
+      <div className="container">
+        <div className="inputs">
+          <div className="input-group">
+            <label htmlFor="hour">Heures</label>
+            <input
+              id="hour"
+              type="number"
+              placeholder="HH"
+              min="0"
+              max="23"
+              value={timeInput.hour}
+              onChange={(e) => setTimeInput({ ...timeInput, hour: e.target.value })}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="minute">Minutes</label>
+            <input
+              id="minute"
+              type="number"
+              placeholder="MM"
+              min="0"
+              max="59"
+              value={timeInput.minute}
+              onChange={(e) => setTimeInput({ ...timeInput, minute: e.target.value })}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="second">Secondes</label>
+            <input
+              id="second"
+              type="number"
+              placeholder="SS"
+              min="0"
+              max="59"
+              value={timeInput.second}
+              onChange={(e) => setTimeInput({ ...timeInput, second: e.target.value })}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="recurrence">Récurrence</label>
+            <select
+              id="recurrence"
+              value={recurrence}
+              onChange={(e) => setRecurrence(e.target.value)}
             >
+              <option value="none">Aucune</option>
+              <option value="daily">Quotidienne</option>
+              {/* Vous pouvez ajouter plus d'options si nécessaire */}
+            </select>
+          </div>
+        </div>
+        {error && <div className="error-message">{error}</div>}
+        <div className="buttons">
+          <button onClick={handleAddAlarm}>Ajouter Alarme</button>
+          <button onClick={clearAlarms} className="clear">
+            Effacer Toutes
+          </button>
+        </div>
+        <div className="alarms-list">
+          {alarms.map((alarm) => (
+            <div key={alarm.id} className={`alarm ${alarm.isActive ? 'active' : ''}`}>
               <span>{alarm.time}</span>
-              <span>
+              <span className="recurrence">
                 {alarm.recurrence === 'daily' ? 'Quotidienne' : 'Unique'}
               </span>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={alarm.isActive}
-                    onChange={() => toggleAlarm(alarm.id)}
-                  />
-                }
-                label={alarm.isActive ? 'Activée' : 'Désactivée'}
+              <input
+                type="checkbox"
+                checked={alarm.isActive}
+                onChange={() => toggleAlarm(alarm.id)}
+                aria-label={`Activer ou désactiver l'alarme à ${alarm.time}`}
               />
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => deleteAlarm(alarm.id)}
-                startIcon={<FaTrashAlt />}
-              >
-                Supprimer
-              </Button>
-            </motion.div>
+              <button onClick={() => deleteAlarm(alarm.id)} aria-label={`Supprimer l'alarme à ${alarm.time}`}>
+                <i className="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
           ))}
-        </Box>
-
-        {/* Contrôles pour arrêter ou snoozer l'alarme */}
+        </div>
         {isAlarmRinging && (
-          <Box sx={{ display: 'flex', gap: 2, marginTop: 4 }}>
-            <Button variant="contained" color="error" onClick={stopAlarm}>
-              Arrêter l'Alarme
-            </Button>
-            <Button variant="outlined" color="warning" onClick={snoozeAlarm}>
-              Snooze 5 minutes
-            </Button>
-          </Box>
+          <div className="alarm-controls">
+            <button onClick={stopAlarm}>Arrêter l'Alarme</button>
+            <button onClick={snoozeAlarm}>Snooze</button>
+          </div>
         )}
-        
-        {/* Thème switch */}
-        <Box sx={{ marginTop: 4 }}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={theme === 'dark'}
-                onChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              />
-            }
-            label={theme === 'dark' ? 'Mode Sombre' : 'Mode Clair'}
-          />
-        </Box>
-      </Box>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
